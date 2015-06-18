@@ -8,21 +8,27 @@ import com.lrgoncalves.restbucks.representations.OrderRepresentation;
 
 public class CompleteOrderActivity {
 
-    public OrderRepresentation completeOrder(Identifier id) {
+    public OrderRepresentation completeOrder(Identifier identifier) {
     	
         OrderRepository repository = OrderRepository.current();
         
-        if (repository.has(id)) {
-            Order order = repository.get(id);
+        if (repository.has(identifier)) {
+            Order order = repository.get(identifier);
 
             if (order.getStatus() == OrderStatus.READY) {
                 order.setStatus(OrderStatus.TAKEN);
-            } else if (order.getStatus() == OrderStatus.TAKEN) {
+            }else if (order.getStatus() == OrderStatus.TAKEN) {
                 throw new OrderAlreadyCompletedException();
-            } else if (order.getStatus() == OrderStatus.UNPAID) {
+            }else if (order.getStatus() == OrderStatus.UNPAID) {
                 throw new OrderNotPaidException();
             }
 
+            Order ordering = OrderRepository.current().get(identifier);
+            
+            ordering.setStatus(OrderStatus.TAKEN);
+            
+            OrderRepository.current().store(identifier, ordering);
+            
             return new OrderRepresentation(order);
             
         } else {

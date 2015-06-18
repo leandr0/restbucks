@@ -1,6 +1,7 @@
 package com.lrgoncalves.restbucks.activities;
 
 import com.lrgoncalves.restbucks.domain.Identifier;
+import com.lrgoncalves.restbucks.domain.Order;
 import com.lrgoncalves.restbucks.domain.OrderStatus;
 import com.lrgoncalves.restbucks.domain.Payment;
 import com.lrgoncalves.restbucks.repositories.OrderRepository;
@@ -19,6 +20,12 @@ public class ReadReceiptActivity {
         } else if (OrderRepository.current().has(identifier) && OrderRepository.current().get(identifier).getStatus() == OrderStatus.TAKEN) {
             throw new OrderAlreadyCompletedException();
         }
+        
+        Order order = OrderRepository.current().get(identifier);
+        
+        order.setStatus(OrderStatus.READY);
+        
+        OrderRepository.current().store(identifier, order);
         
         Payment payment = PaymentRepository.current().get(identifier);
         
