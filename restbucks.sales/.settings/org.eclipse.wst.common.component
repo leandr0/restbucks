@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="restbucks.sales">
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
+        <dependent-module archiveName="service.order.client-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/service.order.client/service.order.client">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="restbucks.domain-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/restbucks.domain/restbucks.domain">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="neo4j-driver-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/neo4j-driver/neo4j-driver">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="neo4j-jndi-binding-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/neo4j-jndi-binding/neo4j-jndi-binding">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="restbucks.sales"/>
+        <property name="java-output-path" value="/restbucks.sales/target/classes"/>
+    </wb-module>
+</project-modules>

@@ -3,8 +3,11 @@ package com.lrgoncalves.restbucks.domain;
 import javax.xml.bind.annotation.XmlEnumValue;
 
 public enum Location {
-    @XmlEnumValue(value="takeaway")
+
+	@XmlEnumValue(value="takeaway")
     TAKEAWAY,
     @XmlEnumValue(value="inStore")
-    IN_STORE
+    IN_STORE;
+	
+	public static final String LABEL = "Location";
 }

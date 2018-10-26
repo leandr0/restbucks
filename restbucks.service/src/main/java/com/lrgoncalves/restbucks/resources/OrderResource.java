@@ -3,6 +3,7 @@ package com.lrgoncalves.restbucks.resources;
 import static com.lrgoncalves.restbucks.representations.Representation.RESTBUCKS_MEDIA_TYPE_JSON;
 import static com.lrgoncalves.restbucks.representations.Representation.RESTBUCKS_MEDIA_TYPE_XML;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -13,6 +14,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.lrgoncalves.restbucks.activities.CreateOrderActivity;
 import com.lrgoncalves.restbucks.activities.InvalidOrderException;
@@ -30,7 +34,12 @@ import com.lrgoncalves.restbucks.representations.RestbucksUri;
 public class OrderResource {
 
     private @Context UriInfo uriInfo;
-
+    
+    @Inject
+    private CreateOrderActivity createOrderActivity;
+    
+    private static final Log LOG = LogFactory.getLog(OrderResource.class);
+   
     public OrderResource() {
     }
 
@@ -91,7 +100,8 @@ public class OrderResource {
     @Produces(RESTBUCKS_MEDIA_TYPE_JSON)
     public Response createJsonOrder(String orderRepresentation) {
         try {
-            OrderRepresentation responseRepresentation = new CreateOrderActivity()
+        	
+            OrderRepresentation responseRepresentation = createOrderActivity
             												.create(OrderRepresentation.fromJsonString(orderRepresentation).getOrder(),
             														new RestbucksUri(uriInfo.getRequestUri()));
             

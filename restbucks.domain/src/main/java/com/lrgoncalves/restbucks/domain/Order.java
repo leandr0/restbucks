@@ -1,21 +1,40 @@
 package com.lrgoncalves.restbucks.domain;
 
+import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlTransient;
-
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
 
-public class Order {
-    
-    private final Location location;
-    private final List<Item> items;
-    
-    @XmlTransient
+@JsonIgnoreProperties(value = { "location" , "identifier","status"})
+public class Order implements Serializable{
+   
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -607787994746887454L;
+
+	public static final String LABEL = "Order";
+
+    private Location location;
+	
+    private List<Item> items;
+   
     @JsonIgnore
+    private Identifier identifier;
+    
     private OrderStatus status = OrderStatus.UNPAID;
 
     public Order(){
+    	location = Location.IN_STORE;
+        items = null;
+    }
+    
+    public Order(Identifier identifier){
+    	this.identifier = identifier;
     	location = Location.IN_STORE;
         items = null;
     }
@@ -36,7 +55,11 @@ public class Order {
         return location;
     }
     
-    public List<Item> getItems() {
+    public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	public List<Item> getItems() {
         return items;
     }
 
@@ -56,11 +79,35 @@ public class Order {
         this.status = status;
     }
 
+    @JsonIgnore
     public OrderStatus getStatus() {
         return status;
     }
     
-    public String toString() {
+    @JsonProperty
+    public void setIdentifier(Identifier identifier) {
+		this.identifier = identifier;
+	}
+    
+    @JsonIgnore
+    public Identifier getIdentifier() {
+		return identifier;
+	}
+
+    public void addItem(final Item item){
+    	
+    	if(item == null){
+    		throw new IllegalArgumentException("Invalid parameter");
+    	}
+    	
+    	if(items == null){
+    		this.items = new LinkedList<Item>();
+    	}
+    	
+    	items.add(item);
+    }
+    
+	public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Location: " + location + "\n");
         sb.append("Status: " + status + "\n");

@@ -23,7 +23,7 @@ public class HypermediaActivity {
 		RestbucksUri 	orderUri 			= getOrderUri(requestUri, identifier);
 		RestbucksUri	paymentUri 			= getPaymentUrl(requestUri, identifier);
 		String 			url 				= getUrl(requestUri);
-
+		
 		return new Hypermedia(
 				new Link(RELATIONS_URI + "cancel", url,"cancel"),
 				new Link(RELATIONS_URI + "order", url,"order"), 

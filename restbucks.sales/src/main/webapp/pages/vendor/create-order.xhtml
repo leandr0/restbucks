@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:decorate template="/template/default.xhtml">
+
+	<ui:define name="center">
+		<h:form id="create-order-form">
+		<div id="div-beverages">
+				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5"
+					id="panel-grid-beverages">
+
+					<p:outputLabel for="select-drink" value="Drink:" />
+					<p:selectOneRadio id="select-drink"
+						value="#{createOrderMB.selectedDrink}">
+						<f:selectItem itemLabel="ESPRESSO" itemValue="ESPRESSO" />
+						<f:selectItem itemLabel="LATTE" itemValue="LATTE" />
+						<f:selectItem itemLabel="CAPPUCCINO" itemValue="CAPPUCCINO" />
+						<f:selectItem itemLabel="FLAT WHITE" itemValue="FLAT_WHITE" />
+					</p:selectOneRadio>
+
+					<p:outputLabel for="select-size" value="Size:" />
+					<p:selectOneRadio id="select-size"
+						value="#{createOrderMB.selectedSize}">
+						<f:selectItem itemLabel="SMALL" itemValue="SMALL" />
+						<f:selectItem itemLabel="MEDIUM" itemValue="MEDIUM" />
+						<f:selectItem itemLabel="LARGE" itemValue="LARGE" />
+					</p:selectOneRadio>
+
+					<p:outputLabel for="select-milk" value="Milk:" />
+					<p:selectOneRadio id="select-milk"
+						value="#{createOrderMB.selectedMilk}">
+						<f:selectItem itemLabel="WHOLE" itemValue="WHOLE" />
+						<f:selectItem itemLabel="SKIM" itemValue="SKIM" />
+						<f:selectItem itemLabel="SEMI" itemValue="SEMI" />
+						<f:selectItem itemLabel="NONE" itemValue="NONE" />
+					</p:selectOneRadio>
+
+				</h:panelGrid>
+			</div>
+			
+			<p:growl id="messages" showDetail="true" sticky="true"/>
+			
+			<div id="div-button-action">
+				<p:commandButton value="Add Item to Order" id="button-add-item"
+					update="data-table-items panel-grid-beverages" icon="ui-icon-disk"
+					action="#{createOrderMB.addItem}" styleClass="ui-priority-primary" onclick="showDiv('#block-loader');" oncomplete="hideDiv('#block-loader');" />
+					
+				<p:commandButton value="Create Order" id="button-create-order"
+					update="data-table-items panel-grid-beverages messages" icon="ui-icon-disk"
+					action="#{createOrderMB.createOrder}" styleClass="ui-priority-primary" onclick="showDiv('#block-loader');" oncomplete="hideDiv('#block-loader');" />
+			</div>
+			<div id="div-list-item">
+				<p:dataTable var="item" value="#{createOrderMB.items}" rows="10"
+					id="data-table-items" paginator="true"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15">
+					<p:column headerText="Drink" sortBy="#{item.drink}">
+						<h:outputText value="#{item.drink}" />
+					</p:column>
+
+					<p:column headerText="Size" sortBy="#{item.size}">
+						<h:outputText value="#{item.size}" />
+					</p:column>
+
+					<p:column headerText="Milk" sortBy="#{item.milk}">
+						<h:outputText value="#{item.milk}" />
+					</p:column>
+
+					<p:column>
+						<p:commandButton icon="ui-icon-trash" title="Delete this Item"
+							action="#{createOrderMB.removeItem(item)}"
+							update="data-table-items create-order-form:messages" onclick="showDiv('#block-loader');" oncomplete="hideDiv('#block-loader');"/>
+					</p:column>
+
+				</p:dataTable>
+			</div>
+		</h:form>
+
+	</ui:define>
+</ui:decorate>
+</html>

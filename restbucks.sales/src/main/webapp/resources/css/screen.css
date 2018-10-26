@@ -1,0 +1,23 @@
+body {
+	background-color: #eeeeee;
+	font-size: 12px
+}
+div.block-loader {
+	width: 100%;
+	height: 100%;
+	background:#F2F2F2;
+	background-attachment: fixed;
+	background-image: url(../../resources/images/ajax-load-gears.gif);
+	background-repeat: no-repeat;
+	background-position: center center;
+	z-index: 99999;
+	opacity:0.8;
+	position: fixed;
+}
+div.div-body {
+	position: absolute;
+	padding-bottom: 3%;
+	padding-top: 3%;
+	padding-left: 5%;
+	padding-right: 5%;
+}

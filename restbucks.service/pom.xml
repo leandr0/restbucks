@@ -13,7 +13,6 @@
 
 	<artifactId>restbucks.service</artifactId>
 	<name>restbucks-service</name>
-	<packaging>war</packaging>
 
 	<properties>
 		<!-- <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> 
@@ -79,12 +78,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
 			<groupId>com.lrgoncalves</groupId>
 			<artifactId>restbucks.domain</artifactId>
 			<version>${project.parent.version}</version>
@@ -95,6 +88,15 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

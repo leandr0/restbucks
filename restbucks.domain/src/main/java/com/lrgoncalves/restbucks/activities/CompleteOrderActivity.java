@@ -1,18 +1,26 @@
 package com.lrgoncalves.restbucks.activities;
 
+import java.io.IOException;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import com.lrgoncalves.restbucks.domain.Identifier;
 import com.lrgoncalves.restbucks.domain.Order;
 import com.lrgoncalves.restbucks.domain.OrderStatus;
 import com.lrgoncalves.restbucks.repositories.OrderRepository;
+import com.lrgoncalves.restbucks.repositories.neo4j.OrderNeo4jRepository;
 import com.lrgoncalves.restbucks.representations.OrderRepresentation;
 
+@Named	
 public class CompleteOrderActivity {
 
-    public OrderRepresentation completeOrder(Identifier identifier) {
-    	
-        OrderRepository repository = OrderRepository.current();
+	@Inject
+	private OrderNeo4jRepository repository;
+	
+    public OrderRepresentation completeOrder(Identifier identifier) throws IOException {
         
-        if (repository.has(identifier)) {
+        if (repository.get(identifier)!= null) {
             Order order = repository.get(identifier);
 
             if (order.getStatus() == OrderStatus.READY) {

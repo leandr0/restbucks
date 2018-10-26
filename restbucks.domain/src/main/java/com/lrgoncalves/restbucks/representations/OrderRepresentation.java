@@ -1,12 +1,15 @@
 package com.lrgoncalves.restbucks.representations;
 
 import java.io.ByteArrayInputStream;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
@@ -20,6 +23,7 @@ import com.lrgoncalves.restbucks.domain.OrderStatus;
 
 @XmlRootElement(name = "order", namespace = Representation.RESTBUCKS_NAMESPACE)
 @JsonSerialize(include =Inclusion.NON_EMPTY)
+@JsonRootName(value = "order")
 public class OrderRepresentation extends Representation {
 
 	@XmlElement(name = "location", namespace = Representation.RESTBUCKS_NAMESPACE)
@@ -30,8 +34,8 @@ public class OrderRepresentation extends Representation {
 
 	@XmlElement(name = "status", namespace = Representation.RESTBUCKS_NAMESPACE)
 	private OrderStatus status;
-
-	private Order order;
+	
+	private List<Item> items;
 
 	/**
 	 * For JAXB :-(
@@ -77,7 +81,7 @@ public class OrderRepresentation extends Representation {
 	public OrderRepresentation(Order order, Hypermedia hypermedia) {
 		try {
 			this.location = order.getLocation();
-			this.order = order;
+			this.items = order.getItems();
 			this.cost = order.calculateCost();
 			this.status = order.getStatus();
 			this.hypermedia = hypermedia;
@@ -93,7 +97,7 @@ public class OrderRepresentation extends Representation {
 	public OrderRepresentation(Order order,RestbucksUri requestUri,String linkType) {
 		try {
 			this.location = order.getLocation();
-			this.order = order;
+			this.items = order.getItems();
 			this.cost = order.calculateCost();
 			this.status = order.getStatus();
 			this.hypermedia = HypermediaActivity.create(requestUri);
@@ -104,19 +108,32 @@ public class OrderRepresentation extends Representation {
 		}
 	}
 
+	@JsonIgnore
 	public Order getOrder() {
-		if (this.location == null || this.order == null ||this.order.getItems() == null) {
+		if (this.location == null ||getItems() == null) {
 			throw new InvalidOrderException();
 		}
-		for (Item i : order.getItems()) {
+		for (Item i : getItems()) {
 			if (i == null) {
 				throw new InvalidOrderException();
 			}
 		}
 
-		return new Order(location, status, order.getItems());
+		return new Order(location, status, getItems());
 	}
 
+	public List<Item> getItems(){
+		return items;
+	}
+	
+	public void setItems(List<Item> items){
+		
+	/*	for (Item item : items) {
+			getOrder().addItem(item);	
+		}*/
+		this.items = items;
+	}
+	
 	public OrderStatus getStatus() {
 		return status;
 	}

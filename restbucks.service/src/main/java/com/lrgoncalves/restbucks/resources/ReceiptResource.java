@@ -19,6 +19,9 @@ import com.lrgoncalves.restbucks.domain.Identifier;
 import com.lrgoncalves.restbucks.representations.OrderRepresentation;
 import com.lrgoncalves.restbucks.representations.ReceiptRepresentation;
 import static com.lrgoncalves.restbucks.representations.Representation.*;
+
+import java.io.IOException;
+
 import com.lrgoncalves.restbucks.representations.RestbucksUri;
 
 @Path("/receipt")
@@ -75,7 +78,7 @@ public class ReceiptResource {
     @DELETE
     @Path("/{orderId}")
     @Produces(RESTBUCKS_MEDIA_TYPE_XML)
-    public Response completeOrder(@PathParam("orderId")String identifier) {
+    public Response completeOrder(@PathParam("orderId")String identifier) throws IOException {
         try {
             OrderRepresentation finalizedOrderRepresentation = new CompleteOrderActivity().completeOrder(new Identifier(identifier));
             return Response.ok().entity(finalizedOrderRepresentation).build();
@@ -91,7 +94,7 @@ public class ReceiptResource {
     @DELETE
     @Path("/{orderId}")
     @Produces(RESTBUCKS_MEDIA_TYPE_JSON)
-    public Response completeJsonOrder(@PathParam("orderId")String identifier) {
+    public Response completeJsonOrder(@PathParam("orderId")String identifier) throws IOException {
         try {
             OrderRepresentation finalizedOrderRepresentation = new CompleteOrderActivity().completeOrder(new Identifier(identifier));
             return Response.ok().entity(finalizedOrderRepresentation).build();

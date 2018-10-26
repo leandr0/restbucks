@@ -21,12 +21,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
 			<groupId>com.sun.grizzly</groupId>
 			<artifactId>grizzly-http-servlet-deployer</artifactId>
 		</dependency>
@@ -59,6 +53,32 @@
 		<dependency>
 			<groupId>javax.ws.rs</groupId>
 			<artifactId>javax.ws.rs-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-library</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.lrgoncalves</groupId>
+			<artifactId>neo4j-driver</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>jersey-client</artifactId>
+					<groupId>com.sun.jersey</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<artifactId>jersey-client</artifactId>
+			<groupId>com.sun.jersey</groupId>
 		</dependency>
 
 	</dependencies>

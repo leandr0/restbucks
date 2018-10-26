@@ -7,6 +7,9 @@ import com.lrgoncalves.restbucks.representations.Representation;
 
 @XmlRootElement
 public class Item {
+	
+	public static final String LABEL = "Item";
+	
     @XmlElement(namespace = Representation.RESTBUCKS_NAMESPACE)
     private Milk milk;
     @XmlElement(namespace = Representation.RESTBUCKS_NAMESPACE)

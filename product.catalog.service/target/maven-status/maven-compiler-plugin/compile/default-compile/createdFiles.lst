@@ -1,0 +1,9 @@
+com\lrgoncalves\product\catalog\service\domain\Product.class
+com\lrgoncalves\product\catalog\service\domain\Link.class
+com\lrgoncalves\product\catalog\service\domain\Promotion.class
+com\lrgoncalves\product\catalog\service\resources\CachePolicy.class
+com\lrgoncalves\product\catalog\service\repositories\EventStore.class
+com\lrgoncalves\product\catalog\service\domain\Date.class
+com\lrgoncalves\product\catalog\service\resources\EventFeedResource.class
+com\lrgoncalves\product\catalog\service\domain\Event.class
+com\lrgoncalves\product\catalog\service\feeds\EventFeedGenerator.class
